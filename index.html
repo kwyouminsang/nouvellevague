@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#080810">
 <title>누벨바그 — Nouvelle Vague</title>
-<meta name="description" content="광운대학교 미디어커뮤니케이션학부 영화 소모임. 우리는 영화를 감상하지 않는다, 해석한다.">
+<meta name="description" content="광운대학교 미디어커뮤니케이션학부 영화 소모임. 새로운 시선이 새로운 영화를 만든다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Serif+KR:wght@300;400;500&family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
@@ -53,12 +53,11 @@ body::after{
 @media(pointer:coarse){body::after{opacity:.15;}}
 
 /* ── CURSOR — PC only ── */
-@media(pointer:fine){body{cursor:none;}}
 .cursor,.cursor-ring{display:none;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-@media(pointer:fine){
-  .cursor{display:block;width:8px;height:8px;background:var(--grain);border-radius:50%;transition:width .25s,height .25s;mix-blend-mode:difference;}
-  .cursor-ring{display:block;width:36px;height:36px;border:1px solid rgba(196,149,90,.45);border-radius:50%;transition:width .3s,height .3s,opacity .3s;}
-}
+.cursor{width:8px;height:8px;background:var(--grain);border-radius:50%;transition:width .25s,height .25s;mix-blend-mode:difference;}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(196,149,90,.45);border-radius:50%;transition:width .3s,height .3s;}
+body.has-mouse{cursor:none;}
+body.has-mouse .cursor,body.has-mouse .cursor-ring{display:block;}
 
 /* ── NAV ── */
 nav{
@@ -530,7 +529,7 @@ footer{
   <div class="hero-reel"></div>
 
   <div class="strip top">
-    <span class="fl">NV · 2025</span>
+    <span class="fl">NV · 2026</span>
     <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div>
   </div>
 
@@ -544,7 +543,7 @@ footer{
     <h1 class="hero-kr">누벨바그</h1>
     <div class="hero-en">Nouvelle Vague</div>
     <div class="hero-line"></div>
-    <div class="hero-tag">우리는 영화를 감상하지 않는다, 해석한다.</div>
+    <div class="hero-tag">새로운 시선이 새로운 영화를 만든다.</div>
   </div>
 
   <div class="strip bottom">
@@ -670,12 +669,12 @@ footer{
       <div class="s-rule"></div>
     </div>
     <div class="arc-grid">
-      <div class="arc-card reveal"><div class="arc-img"><div class="arc-card-bg p1"></div><div class="arc-ph"><div class="arc-ph-icon">🎬</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · 1st</div><div class="arc-name">첫 번째 정기 모임</div><span class="arc-tag">정기 모임</span></div></div>
-      <div class="arc-card reveal d1"><div class="arc-img"><div class="arc-card-bg p2"></div><div class="arc-ph"><div class="arc-ph-icon">🏛</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · Special</div><div class="arc-name">아트시네마 방문</div><span class="arc-tag">특별 활동</span></div></div>
-      <div class="arc-card reveal d2"><div class="arc-img"><div class="arc-card-bg p3"></div><div class="arc-ph"><div class="arc-ph-icon">🏆</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · Event</div><div class="arc-name">영화 티어메이커</div><span class="arc-tag">이벤트</span></div></div>
-      <div class="arc-card reveal"><div class="arc-img"><div class="arc-card-bg p4"></div><div class="arc-ph"><div class="arc-ph-icon">⚽</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · Event</div><div class="arc-name">영화 월드컵</div><span class="arc-tag">이벤트</span></div></div>
-      <div class="arc-card reveal d1"><div class="arc-img"><div class="arc-card-bg p5"></div><div class="arc-ph"><div class="arc-ph-icon">🎭</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · Festival</div><div class="arc-name">최악의 영화 영화제</div><span class="arc-tag">축제</span></div></div>
-      <div class="arc-card reveal d2"><div class="arc-img"><div class="arc-card-bg p6"></div><div class="arc-ph"><div class="arc-ph-icon">✨</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2025 · Open</div><div class="arc-name">자율 기획 활동</div><span class="arc-tag">자율</span></div></div>
+      <div class="arc-card reveal"><div class="arc-img"><div class="arc-card-bg p1"></div><div class="arc-ph"><div class="arc-ph-icon">🎬</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · 1st</div><div class="arc-name">첫 번째 정기 모임</div><span class="arc-tag">정기 모임</span></div></div>
+      <div class="arc-card reveal d1"><div class="arc-img"><div class="arc-card-bg p2"></div><div class="arc-ph"><div class="arc-ph-icon">🏛</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · Special</div><div class="arc-name">아트시네마 방문</div><span class="arc-tag">특별 활동</span></div></div>
+      <div class="arc-card reveal d2"><div class="arc-img"><div class="arc-card-bg p3"></div><div class="arc-ph"><div class="arc-ph-icon">🏆</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · Event</div><div class="arc-name">영화 티어메이커</div><span class="arc-tag">이벤트</span></div></div>
+      <div class="arc-card reveal"><div class="arc-img"><div class="arc-card-bg p4"></div><div class="arc-ph"><div class="arc-ph-icon">⚽</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · Event</div><div class="arc-name">영화 월드컵</div><span class="arc-tag">이벤트</span></div></div>
+      <div class="arc-card reveal d1"><div class="arc-img"><div class="arc-card-bg p5"></div><div class="arc-ph"><div class="arc-ph-icon">🎭</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · Festival</div><div class="arc-name">최악의 영화 영화제</div><span class="arc-tag">축제</span></div></div>
+      <div class="arc-card reveal d2"><div class="arc-img"><div class="arc-card-bg p6"></div><div class="arc-ph"><div class="arc-ph-icon">✨</div><div class="arc-ph-lbl">Photo Coming Soon</div></div></div><div class="arc-over"></div><div class="arc-info"><div class="arc-date">2026 · Open</div><div class="arc-name">자율 기획 활동</div><span class="arc-tag">자율</span></div></div>
     </div>
   </div>
 </section>
@@ -712,7 +711,7 @@ footer{
     </div>
     <div class="footer-bot">
       <div class="f-copy">COPYRIGHT © KWYOUMINSANG. ALL RIGHTS RESERVED.</div>
-      <div class="f-sub">Nouvelle Vague · Film Collective · 2025</div>
+      <div class="f-sub">Nouvelle Vague · Film Collective · 2026</div>
     </div>
   </div>
 </footer>
@@ -741,28 +740,39 @@ footer{
 </div>
 
 <script>
-/* ── CURSOR (PC only) ── */
-const isPC = window.matchMedia('(pointer:fine)').matches;
-if (isPC) {
-  const cur = document.getElementById('cur');
-  const curR = document.getElementById('curR');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => {
-    mx=e.clientX; my=e.clientY;
-    cur.style.left=mx+'px'; cur.style.top=my+'px';
-  });
-  (function tick(){
-    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
-    curR.style.left=rx+'px'; curR.style.top=ry+'px';
-    requestAnimationFrame(tick);
-  })();
-  const big = () => { cur.style.width='15px'; cur.style.height='15px'; curR.style.width='58px'; curR.style.height='58px'; };
-  const sm  = () => { cur.style.width='8px';  cur.style.height='8px';  curR.style.width='36px'; curR.style.height='36px'; };
-  document.querySelectorAll('a,button,.act-item,.p-cell,.arc-card').forEach(el => {
-    el.addEventListener('mouseenter', big);
-    el.addEventListener('mouseleave', sm);
-  });
-}
+/* ── CURSOR — 터치 감지로 PC/모바일 구분 (사파리 호환) ── */
+const cur = document.getElementById('cur');
+const curR = document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0,hasMouse=false;
+
+// 마우스가 실제로 움직이면 커서 활성화
+document.addEventListener('mousemove', e => {
+  if (!hasMouse) {
+    hasMouse = true;
+    document.body.classList.add('has-mouse');
+  }
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+}, {passive:true});
+
+// 터치하면 커서 비활성화
+document.addEventListener('touchstart', () => {
+  hasMouse = false;
+  document.body.classList.remove('has-mouse');
+}, {passive:true});
+
+(function tick(){
+  rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  requestAnimationFrame(tick);
+})();
+
+const big = () => { cur.style.width='15px'; cur.style.height='15px'; curR.style.width='58px'; curR.style.height='58px'; };
+const sm  = () => { cur.style.width='8px';  cur.style.height='8px';  curR.style.width='36px'; curR.style.height='36px'; };
+document.querySelectorAll('a,button,.act-item,.p-cell,.arc-card').forEach(el => {
+  el.addEventListener('mouseenter', big);
+  el.addEventListener('mouseleave', sm);
+});
 
 /* ── NAV ── */
 window.addEventListener('scroll', () => {
