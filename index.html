@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>누벨바그 — Nouvelle Vague</title>
+<meta name="description" content="광운대학교 미디어커뮤니케이션학부 영화 소모임. 우리는 영화를 감상하지 않는다, 해석한다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --noir: #080810;
+  --deep: #0e0e1c;
+  --cinema: #161628;
+  --ink: #1e1e38;
+  --film: #e8e2d0;
+  --cream: #f0ece0;
+  --grain: #c4955a;
+  --grain-light: #dbb87a;
+  --silver: #8888aa;
+  --mist: #5a5a78;
+  --border: rgba(196,149,90,0.15);
+  --border-bright: rgba(196,149,90,0.35);
+  --white-faint: rgba(232,226,208,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--noir);
+  color: var(--film);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ══ CUSTOM CURSOR ══ */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--grain);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(196,149,90,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+}
+body:hover .cursor-ring { opacity: 1; }
+
+/* ══ NOISE TEXTURE ══ */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0.4;
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--noir); }
+::-webkit-scrollbar-thumb { background: var(--grain); }
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+}
+nav.scrolled {
+  background: rgba(8,8,16,0.9);
+  backdrop-filter: blur(24px);
+  border-color: var(--border);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--grain);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.nav-links {
+  display: flex; gap: 40px; list-style: none;
+}
+.nav-links a {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--grain); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px;
+}
+.nav-hamburger span {
+  display: block; width: 24px; height: 1px;
+  background: var(--silver);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* ══ MOBILE NAV ══ */
+.mobile-menu {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(8,8,16,0.97);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-style: italic;
+  color: var(--film);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--grain); }
+
+/* ══ HERO ══ */
+.hero {
+  position: relative;
+  height: 100vh; min-height: 700px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* Animated background lines */
+.hero-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(196,149,90,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,149,90,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridDrift 20s linear infinite;
+}
+@keyframes gridDrift {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(80px, 80px); }
+}
+
+/* Radial vignette */
+.hero-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, var(--noir) 100%);
+}
+
+/* Film reel decoration */
+.hero-reel {
+  position: absolute;
+  right: -120px; top: 50%; transform: translateY(-50%);
+  width: 400px; height: 400px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: reelSpin 40s linear infinite;
+}
+.hero-reel::before {
+  content: '';
+  position: absolute;
+  inset: 30px;
+  border: 1px solid var(--border-bright);
+  border-radius: 50%;
+}
+.hero-reel::after {
+  content: '';
+  position: absolute;
+  inset: 80px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--border) 0deg 10deg, transparent 10deg 20deg);
+}
+@keyframes reelSpin { to { transform: translateY(-50%) rotate(360deg); } }
+
+.hero-reel-left {
+  position: absolute;
+  left: -180px; bottom: -100px;
+  width: 500px; height: 500px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  opacity: 0.08;
+  animation: reelSpinReverse 60s linear infinite;
+}
+@keyframes reelSpinReverse { to { transform: rotate(-360deg); } }
+
+/* Hero content */
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0;
+}
+
+.hero-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--grain);
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-logo-mark {
+  width: 80px; height: 80px;
+  border: 1.5px solid var(--border-bright);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s forwards;
+}
+.hero-logo-mark::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(196,149,90,0.2);
+  border-radius: 1px;
+}
+.hero-logo-mark svg { position: absolute; }
+
+.hero-title-kr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 12vw, 120px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--film);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 1.2s 0.7s forwards;
+}
+
+.hero-title-en {
+  font-size: clamp(9px, 1.5vw, 11px);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--silver);
+  font-weight: 100;
+  margin-bottom: 60px;
+  opacity: 0;
+  animation: fadeUp 1s 1s forwards;
+}
+
+.hero-line { width: 1px; height: 80px; background: linear-gradient(to bottom, var(--grain), transparent); margin-bottom: 60px; opacity: 0; animation: fadeUp 1s 1.2s forwards; }
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--film);
+  opacity: 0;
+  animation: fadeUp 1s 1.4s forwards;
+  line-height: 1.6;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+  opacity: 0; animation: fadeUp 1s 2s forwards;
+}
+.hero-scroll span {
+  font-size: 8px; letter-spacing: 0.4em;
+  text-transform: uppercase; color: var(--mist);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--mist), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* film strip top/bottom */
+.filmstrip {
+  position: absolute; left: 0; right: 0;
+  display: flex; gap: 6px; padding: 14px 20px;
+  overflow: hidden;
+}
+.filmstrip.top { top: 0; border-bottom: 1px solid var(--border); }
+.filmstrip.bottom { bottom: 0; border-top: 1px solid var(--border); }
+.fhole {
+  flex-shrink: 0;
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(196,149,90,0.12);
+  background: var(--noir);
+}
+.fhole.on { background: rgba(196,149,90,0.12); border-color: rgba(196,149,90,0.3); }
+.filmstrip-label {
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--mist);
+  margin-right: 16px; white-space: nowrap;
+  align-self: center; flex-shrink: 0;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ══ SECTIONS ══ */
+section { padding: 120px 48px; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-header {
+  display: flex; align-items: flex-end;
+  gap: 24px; margin-bottom: 80px;
+}
+.s-num {
+  font-size: 10px; letter-spacing: 0.3em;
+  color: var(--grain); opacity: 0.5;
+  padding-bottom: 6px; white-space: nowrap;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300; font-style: italic;
+  color: var(--film); line-height: 1;
+}
+.s-title small {
+  display: block; font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px; font-style: normal; font-weight: 200;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--mist); margin-bottom: 8px;
+}
+.s-line { flex: 1; height: 1px; background: var(--border); margin-bottom: 6px; }
+
+/* ══ PURPOSE ══ */
+#purpose { background: var(--noir); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.purpose-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.purpose-cell {
+  background: var(--noir);
+  padding: 52px 48px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.purpose-cell:hover { background: var(--white-faint); }
+.purpose-cell::before {
+  content: attr(data-n);
+  position: absolute; bottom: -10px; right: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px; font-style: italic; font-weight: 300;
+  color: rgba(196,149,90,0.05);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.p-tag {
+  font-size: 8px; letter-spacing: 0.4em;
+  text-transform: uppercase; color: var(--grain);
+  margin-bottom: 20px; opacity: 0.7;
+}
+.p-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-style: italic; font-weight: 400;
+  color: var(--film); margin-bottom: 20px;
+  line-height: 1.25;
+}
+.p-body {
+  font-size: 13px; font-weight: 300;
+  color: var(--silver); line-height: 1.9;
+}
+
+/* ══ SLOGAN ══ */
+.slogan-section {
+  padding: 160px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.slogan-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 70% at 50% 50%, rgba(196,149,90,0.06) 0%, transparent 70%);
+}
+.slogan-kr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 5vw, 56px);
+  font-style: italic; font-weight: 300;
+  color: var(--film); line-height: 1.4;
+  position: relative; z-index: 1;
+  margin-bottom: 24px;
+}
+.slogan-kr em { color: var(--grain); font-style: normal; }
+.slogan-en {
+  font-size: 12px; letter-spacing: 0.25em;
+  color: var(--mist); position: relative; z-index: 1;
+}
+
+/* ══ ACTIVITIES ══ */
+#activities { background: var(--noir); }
+
+.activity-list { display: flex; flex-direction: column; }
+
+.activity-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 0.3s;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-item:hover { background: var(--white-faint); }
+.activity-item::after {
+  content: '';
+  position: absolute; left: 0; bottom: -1px;
+  width: 0; height: 1px;
+  background: var(--grain);
+  transition: width 0.5s ease;
+}
+.activity-item:hover::after { width: 100%; }
+
+.activity-num-col {
+  padding: 52px 0 52px 0;
+  display: flex; align-items: flex-start; justify-content: center;
+  border-right: 1px solid var(--border);
+}
+.activity-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-style: italic; font-weight: 300;
+  color: rgba(196,149,90,0.2); line-height: 1;
+}
+
+.activity-body { padding: 52px 60px; }
+.activity-type {
+  font-size: 8px; letter-spacing: 0.4em;
+  text-transform: uppercase; color: var(--grain);
+  margin-bottom: 14px; opacity: 0.7;
+}
+.activity-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-style: italic; font-weight: 400;
+  color: var(--film); margin-bottom: 20px;
+  line-height: 1.2;
+}
+.activity-desc {
+  font-size: 13px; font-weight: 300;
+  color: var(--silver); line-height: 1.9;
+  max-width: 680px;
+}
+.activity-tag {
+  display: inline-block; margin-top: 20px;
+  font-size: 8px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 14px; border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--mist);
+}
+.activity-tag.reg {
+  border-color: rgba(196,149,90,0.3);
+  color: var(--grain);
+  background: rgba(196,149,90,0.06);
+}
+
+/* ══ BRAND ══ */
+#brand { background: var(--cinema); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.colors-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-bottom: 80px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.color-card { display: flex; flex-direction: column; }
+.swatch { height: 160px; transition: height 0.3s; }
+.color-card:hover .swatch { height: 200px; }
+.color-meta {
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.2);
+}
+.c-name { font-size: 11px; color: var(--film); margin-bottom: 3px; font-weight: 300; }
+.c-role { font-size: 9px; color: var(--mist); margin-bottom: 8px; }
+.c-hex { font-family: 'Josefin Sans', monospace; font-size: 9px; color: var(--grain); letter-spacing: 0.1em; }
+
+.type-table { border: 1px solid var(--border); }
+.type-row {
+  display: grid; grid-template-columns: 180px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta-col {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  background: rgba(0,0,0,0.15);
+}
+.t-role { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--grain); opacity: 0.7; }
+.t-spec { font-size: 10px; color: var(--mist); line-height: 1.6; }
+.type-preview { padding: 32px 40px; display: flex; align-items: center; }
+
+/* ══ WIKI ══ */
+#wiki { background: var(--noir); }
+
+.wiki-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.wiki-card {
+  background: var(--noir);
+  padding: 40px 36px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background 0.3s;
+  text-decoration: none; color: inherit;
+}
+.wiki-card:hover { background: var(--white-faint); }
+.wiki-icon { font-size: 24px; }
+.wiki-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-style: italic; font-weight: 400;
+  color: var(--film); line-height: 1.2;
+}
+.wiki-desc { font-size: 11px; color: var(--silver); line-height: 1.7; font-weight: 300; }
+.wiki-arrow {
+  margin-top: auto; font-size: 9px;
+  letter-spacing: 0.2em; color: var(--grain);
+  opacity: 0; transition: opacity 0.2s;
+  text-transform: uppercase;
+}
+.wiki-card:hover .wiki-arrow { opacity: 1; }
+
+/* ══ FOOTER ══ */
+footer {
+  padding: 64px 48px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 40px;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic; font-weight: 300;
+  color: var(--grain); opacity: 0.7;
+}
+.footer-info {
+  font-size: 10px; letter-spacing: 0.15em;
+  color: var(--mist); text-align: right;
+  line-height: 2; opacity: 0.6;
+}
+
+/* ══ REVEAL ANIMATIONS ══ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  section { padding: 80px 24px; }
+  .slogan-section { padding: 100px 24px; }
+
+  .purpose-grid { grid-template-columns: 1fr; }
+  .purpose-cell { padding: 40px 28px; }
+
+  .activity-item { grid-template-columns: 60px 1fr; }
+  .activity-num-col { padding: 40px 0; }
+  .activity-num { font-size: 36px; }
+  .activity-body { padding: 40px 28px; }
+
+  .colors-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .type-row { grid-template-columns: 1fr; }
+  .type-meta-col { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 24px; }
+  .type-preview { padding: 24px; }
+
+  .wiki-grid { grid-template-columns: 1fr 1fr; }
+
+  footer { flex-direction: column; text-align: center; }
+  .footer-info { text-align: center; }
+
+  .hero-reel { right: -200px; width: 300px; height: 300px; }
+  .hero-reel-left { display: none; }
+}
+
+@media (max-width: 540px) {
+  .colors-grid { grid-template-columns: 1fr 1fr; }
+  .wiki-grid { grid-template-columns: 1fr; }
+  .hero-title-kr { font-size: 56px; }
+  .activity-item { grid-template-columns: 1fr; }
+  .activity-num-col { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#purpose" onclick="closeMobile()">소개</a>
+  <a href="#activities" onclick="closeMobile()">활동</a>
+  <a href="#brand" onclick="closeMobile()">브랜드</a>
+  <a href="#wiki" onclick="closeMobile()">위키</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">누벨바그</a>
+  <ul class="nav-links">
+    <li><a href="#purpose">소개</a></li>
+    <li><a href="#activities">활동</a></li>
+    <li><a href="#brand">브랜드</a></li>
+    <li><a href="#wiki">위키 구조</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-lines"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-reel"></div>
+  <div class="hero-reel-left"></div>
+
+  <!-- Film strip top -->
+  <div class="filmstrip top">
+    <span class="filmstrip-label">NV · 2025</span>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kwangwoon Univ. · Media &amp; Communication · Film Collective</div>
+
+    <div class="hero-logo-mark">
+      <svg width="40" height="16" viewBox="0 0 40 16" fill="none">
+        <path d="M1 8 C5 2, 10 2, 14 8 C18 14, 23 14, 27 8 C31 2, 35 2, 39 8" stroke="#C4955A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1 class="hero-title-kr">누벨바그</h1>
+    <div class="hero-title-en">Nouvelle Vague</div>
+
+    <div class="hero-line"></div>
+
+    <div class="hero-tagline">
+      우리는 영화를 감상하지 않는다, 해석한다.
+    </div>
+  </div>
+
+  <!-- Film strip bottom -->
+  <div class="filmstrip bottom">
+    <span class="filmstrip-label">KW MEDIA</span>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole on"></div><div class="fhole"></div>
+    <div class="fhole on"></div><div class="fhole"></div><div class="fhole on"></div>
+    <div class="fhole"></div><div class="fhole on"></div><div class="fhole on"></div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PURPOSE -->
+<section id="purpose">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="s-num">01 ——</span>
+      <h2 class="s-title"><small>About</small>소모임 목적</h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="purpose-grid">
+      <div class="purpose-cell reveal reveal-delay-1" data-n="I">
+        <div class="p-tag">Culture Exchange</div>
+        <div class="p-heading">영화를 매개로 한<br>문화적 교류</div>
+        <div class="p-body">영화는 사회적 맥락, 역사적 배경, 인간의 감정과 가치를 반영하는 종합 예술입니다. 단순한 오락을 넘어 다양한 해석과 토론을 가능케 하는 매체로서, 구성원의 폭넓은 관점 형성과 비판적 사고를 발전시킵니다.</div>
+      </div>
+      <div class="purpose-cell reveal reveal-delay-2" data-n="II">
+        <div class="p-tag">Anti-Algorithm</div>
+        <div class="p-heading">알고리즘 밖의<br>영화를 발견하다</div>
+        <div class="p-body">개인 맞춤형 알고리즘은 접하는 영화의 장르와 종류를 점차 제한합니다. 공동 관람과 집단 토의를 통해 장르·국가·시대를 달리하는 다양한 영화를 체험하는 환경을 조성합니다.</div>
+      </div>
+      <div class="purpose-cell reveal reveal-delay-3" data-n="III">
+        <div class="p-tag">Critical Discourse</div>
+        <div class="p-heading">심층 해석과<br>비판적 담론</div>
+        <div class="p-body">같은 작품에 대해서도 개인의 경험과 관점에 따라 다르게 도출되는 해석을 공유하고 토론합니다. 자신의 의견을 논리적으로 표현하고 타인의 의견을 존중하는 태도를 기릅니다.</div>
+      </div>
+      <div class="purpose-cell reveal reveal-delay-4" data-n="IV">
+        <div class="p-tag">Community</div>
+        <div class="p-heading">자율적<br>문화 공동체</div>
+        <div class="p-body">구성원의 자율적 참여와 집합적 의사결정에 기반한 문화 공동체를 지향합니다. 단순한 문화 소비자가 아닌 능동적 문화 생산 및 향유 주체로서의 정체성을 확립합니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLOGAN -->
+<div class="slogan-section">
+  <div class="slogan-kr reveal">
+    "영화는 <em>감상</em>이 아니라<br><em>해석</em>이다."
+  </div>
+  <div class="slogan-en reveal reveal-delay-1">We don't just watch films. We read them.</div>
+</div>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="s-num">02 ——</span>
+      <h2 class="s-title"><small>Activities</small>활동 계획</h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="activity-list">
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">01</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Regular · 분기 1회</div>
+          <div class="activity-title">정기 모임</div>
+          <div class="activity-desc">본 소모임의 근간이 되는 활동으로, 분기당 1회 정기 모임을 개최합니다. 하나 이상의 영화를 공동 관람한 후 작품에 대한 감상과 해석을 자유롭게 나누는 토론 시간을 갖습니다. 관람 작품은 구성원의 추천과 투표를 통해 민주적으로 선정하며, 장르·국가·시대적 배경을 고려해 다양하게 선정하는 것을 원칙으로 합니다.</div>
+          <span class="activity-tag reg">정기</span>
+        </div>
+      </div>
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">02</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Special · 비정기</div>
+          <div class="activity-title">아트시네마 · 독립영화 관람</div>
+          <div class="activity-desc">상업 영화 위주의 소비 환경에서 벗어나 예술 영화, 해외 독립영화, 국내 단편 영화 등을 함께 감상합니다. 주류 배급망에서 접하기 어려운 작품을 통해 구성원의 영화적 시야를 확장하고, 다양한 영화 언어와 표현 방식에 대한 이해를 심화합니다.</div>
+          <span class="activity-tag">비정기</span>
+        </div>
+      </div>
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">03</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Event · 집단 토의</div>
+          <div class="activity-title">영화 티어메이커</div>
+          <div class="activity-desc">집단 토의를 통해 특정 주제나 장르의 영화를 대상으로 '공식 영화 티어표'를 제작합니다. 단순한 순위 매기기에 그치지 않고 각 작품의 배치에 대한 근거를 논의하는 과정에서 비판적 사고와 의견 조율 능력을 기릅니다. 완성된 티어표는 시각화 작업을 거쳐 배포합니다.</div>
+          <span class="activity-tag">이벤트</span>
+        </div>
+      </div>
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">04</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Event · 토너먼트</div>
+          <div class="activity-title">영화 월드컵</div>
+          <div class="activity-desc">'B급 영화', '명작 영화' 등 카테고리를 나눠 토너먼트 방식의 영화 월드컵을 진행합니다. 각 라운드마다 해당 작품에 대한 간략한 의견 공유와 토론을 병행한 뒤 투표를 통해 다음 라운드 진출작을 결정합니다. 월드컵 진행 과정 자체를 소모임의 집단적 영화 취향을 형성하는 계기로 삼습니다.</div>
+          <span class="activity-tag">이벤트</span>
+        </div>
+      </div>
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">05</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Festival · 연례 특별행사</div>
+          <div class="activity-title">최악의 영화 영화제</div>
+          <div class="activity-desc">구성원으로부터 '최악의 영화' 후보작을 자유롭게 추천받아 함께 감상하는 특별 행사입니다. 감상 이후 투표를 통해 최종 '최악의 영화'를 선출하며 결과를 소모임 내에서 기록합니다. 건전한 유머와 비평의 관점에서 즐기는 유희적 프로그램입니다.</div>
+          <span class="activity-tag">축제</span>
+        </div>
+      </div>
+
+      <div class="activity-item reveal">
+        <div class="activity-num-col"><div class="activity-num">06</div></div>
+        <div class="activity-body">
+          <div class="activity-type">Open · 자율 기획</div>
+          <div class="activity-title">자율 기획 활동</div>
+          <div class="activity-desc">영화 관련 전시 관람, 영화제 참여, 특정 감독이나 배우의 필모그래피 탐구 등 다양한 자율 활동을 비정기적으로 진행합니다. 구성원 누구나 제안할 수 있으며 참여 여부는 개인의 자율에 맡깁니다. 소모임은 구성원의 자발적 기획을 적극 장려합니다.</div>
+          <span class="activity-tag">자율</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BRAND -->
+<section id="brand">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="s-num">03 ——</span>
+      <h2 class="s-title"><small>Brand System</small>브랜드 가이드</h2>
+      <div class="s-line"></div>
+    </div>
+
+    <!-- Colors -->
+    <div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);margin-bottom:20px;" class="reveal">Color Palette</div>
+    <div class="colors-grid reveal">
+      <div class="color-card">
+        <div class="swatch" style="background:#080810;"></div>
+        <div class="color-meta"><div class="c-name">Noir</div><div class="c-role">배경 · 주요 공간</div><div class="c-hex">#080810</div></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background:#161628;"></div>
+        <div class="color-meta"><div class="c-name">Cinéma</div><div class="c-role">메인 컬러 · 강조</div><div class="c-hex">#161628</div></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background:#E8E2D0;border-top:1px solid rgba(255,255,255,0.06);"></div>
+        <div class="color-meta"><div class="c-name">Film</div><div class="c-role">주요 텍스트 · 크림</div><div class="c-hex">#E8E2D0</div></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background:#C4955A;"></div>
+        <div class="color-meta"><div class="c-name">Grain</div><div class="c-role">골드 포인트 · 강조</div><div class="c-hex">#C4955A</div></div>
+      </div>
+      <div class="color-card">
+        <div class="swatch" style="background:#8888AA;"></div>
+        <div class="color-meta"><div class="c-name">Dusk</div><div class="c-role">보조 텍스트</div><div class="c-hex">#8888AA</div></div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);margin-top:64px;margin-bottom:20px;" class="reveal">Typography</div>
+    <div class="type-table reveal">
+      <div class="type-row">
+        <div class="type-meta-col">
+          <div class="t-role">Display</div>
+          <div class="t-spec">Cormorant Garamond<br>Italic 300</div>
+        </div>
+        <div class="type-preview">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:48px;font-style:italic;font-weight:300;color:var(--film);">누벨바그</span>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta-col">
+          <div class="t-role">Heading</div>
+          <div class="t-spec">Noto Serif KR<br>400</div>
+        </div>
+        <div class="type-preview">
+          <span style="font-family:'Noto Serif KR',serif;font-size:24px;font-weight:400;color:var(--film);">영화를 읽는 사람들</span>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta-col">
+          <div class="t-role">Body</div>
+          <div class="t-spec">Josefin Sans<br>300 · 1.9 leading</div>
+        </div>
+        <div class="type-preview">
+          <span style="font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:300;color:var(--silver);line-height:1.9;">영화는 감상이 아니라 해석이다.<br>우리는 언제나 프레임 밖을 읽는다.</span>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta-col">
+          <div class="t-role">Label</div>
+          <div class="t-spec">Josefin Sans 100<br>0.4em tracking</div>
+        </div>
+        <div class="type-preview">
+          <span style="font-family:'Josefin Sans',sans-serif;font-size:10px;font-weight:100;letter-spacing:0.4em;text-transform:uppercase;color:var(--grain);">Film · Media · Scene · Frame</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIKI -->
+<section id="wiki" style="background:var(--deep);border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="s-num">04 ——</span>
+      <h2 class="s-title"><small>Notion Wiki</small>위키 구조</h2>
+      <div class="s-line"></div>
+    </div>
+    <div class="wiki-grid">
+      <div class="wiki-card reveal">
+        <div class="wiki-icon">🎬</div>
+        <div class="wiki-name">홈 / 소개</div>
+        <div class="wiki-desc">소모임 목적, 기본 정보, 브랜드 가이드 요약</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-1">
+        <div class="wiki-icon">🎞</div>
+        <div class="wiki-name">활동 아카이브</div>
+        <div class="wiki-desc">모든 활동 기록 모음. 정기 모임, 특별 행사 포함</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-2">
+        <div class="wiki-icon">📅</div>
+        <div class="wiki-name">정기 모임 기록</div>
+        <div class="wiki-desc">회차별 관람 영화, 토론 내용, 참석자 명단</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-1">
+        <div class="wiki-icon">🏆</div>
+        <div class="wiki-name">티어표 &amp; 월드컵</div>
+        <div class="wiki-desc">영화 티어메이커 결과, 역대 월드컵 브래킷</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-2">
+        <div class="wiki-icon">🎭</div>
+        <div class="wiki-name">최악의 영화 영화제</div>
+        <div class="wiki-desc">명예의 전당, 역대 수상작, 후보 영화 목록</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-3">
+        <div class="wiki-icon">📚</div>
+        <div class="wiki-name">추천 영화 목록</div>
+        <div class="wiki-desc">구성원 큐레이션. 장르별·국가별·시대별 분류</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal">
+        <div class="wiki-icon">🖼</div>
+        <div class="wiki-name">아트시네마 기록</div>
+        <div class="wiki-desc">독립영화관 방문 후기, 상영작 감상 아카이브</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-1">
+        <div class="wiki-icon">📋</div>
+        <div class="wiki-name">운영 규정</div>
+        <div class="wiki-desc">활동 원칙, 의사결정 방식, 소모임 운영 가이드</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+      <div class="wiki-card reveal reveal-delay-2">
+        <div class="wiki-icon">👥</div>
+        <div class="wiki-name">구성원 소개</div>
+        <div class="wiki-desc">멤버 프로필, 관심 장르, 영화 취향</div>
+        <div class="wiki-arrow">방문하기 →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">누벨바그</div>
+  <div class="footer-info">
+    Nouvelle Vague<br>
+    Kwangwoon University · Media &amp; Communication<br>
+    Film Collective — 2025
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Hover effect on interactive elements
+document.querySelectorAll('a, button, .activity-item, .purpose-cell, .wiki-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '16px'; cursor.style.height = '16px';
+    ring.style.width = '60px'; ring.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '8px'; cursor.style.height = '8px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+  });
+});
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── MOBILE MENU ──
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
