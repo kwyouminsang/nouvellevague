@@ -771,7 +771,7 @@ footer{
         <div class="form-step active" id="step0">
           <div>
             <div class="step-label">Step 1</div>
-            <div class="step-title">어떤 종류의 추천/건의인가요?</div>
+            <div class="step-title">어떤 종류의 추천인가요?</div>
           </div>
           <div class="cat-grid">
             <button class="cat-btn" onclick="selectCat1('영화 추천')">
@@ -1063,25 +1063,36 @@ async function submitForm(){
   const btn=document.getElementById('formSubmit');
   btn.disabled=true; btn.textContent='제출 중...';
   const category2=cat2||(cat1==='기타'?'':'');
-  const formData=new URLSearchParams();
-  formData.append('entry.623424813', cat1);
-  formData.append('entry.1162700598', category2);
-  formData.append('entry.1695535251', title);
-  formData.append('entry.1500750892', content);
-  formData.append('entry.333556342', name||'익명');
-  try{
-    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse', {
-      method:'POST', mode:'no-cors',
-      body: formData
-    });
-    document.getElementById('formSuccess').classList.add('show');
-    document.querySelector('.form-steps').style.display='none';
-    document.getElementById('formProgress').style.display='none';
-  } catch(e){
-    btn.disabled=false; btn.textContent='제출하기';
-    errEl.textContent='제출 중 오류가 발생했어요. 다시 시도해주세요.';
-    errEl.classList.add('show');
+
+  const base='https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse';
+
+  // hidden iframe submit — bypasses no-cors body restriction
+  const iframe=document.createElement('iframe');
+  iframe.name='nv_iframe'; iframe.style.display='none';
+  document.body.appendChild(iframe);
+
+  const form=document.createElement('form');
+  form.method='POST'; form.action=base; form.target='nv_iframe';
+
+  const fields={
+    'entry.623424813':cat1,
+    'entry.1162700598':category2,
+    'entry.1695535251':title,
+    'entry.1500750892':content,
+    'entry.333556342':name||'익명',
+  };
+  for(const [k,v] of Object.entries(fields)){
+    const inp=document.createElement('input');
+    inp.type='hidden'; inp.name=k; inp.value=v;
+    form.appendChild(inp);
   }
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>{ form.remove(); iframe.remove(); },3000);
+
+  document.getElementById('formSuccess').classList.add('show');
+  document.querySelector('.form-steps').style.display='none';
+  document.getElementById('formProgress').style.display='none';
 }
 function resetForm(){
   cat1=''; cat2='';
