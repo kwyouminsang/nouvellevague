@@ -1063,14 +1063,18 @@ async function submitForm(){
   const btn=document.getElementById('formSubmit');
   btn.disabled=true; btn.textContent='제출 중...';
   const category2=cat2||(cat1==='기타'?'':'');
-  const formData=new FormData();
+  const formData=new URLSearchParams();
   formData.append('entry.623424813', cat1);
   formData.append('entry.1162700598', category2);
   formData.append('entry.1695535251', title);
   formData.append('entry.1500750892', content);
   formData.append('entry.333556342', name||'익명');
   try{
-    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse', {method:'POST',mode:'no-cors',body:formData});
+    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse', {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: formData.toString()
+    });
     document.getElementById('formSuccess').classList.add('show');
     document.querySelector('.form-steps').style.display='none';
     document.getElementById('formProgress').style.display='none';
