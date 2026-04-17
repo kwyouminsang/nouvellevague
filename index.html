@@ -1072,8 +1072,7 @@ async function submitForm(){
   try{
     await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse', {
       method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body: formData.toString()
+      body: formData
     });
     document.getElementById('formSuccess').classList.add('show');
     document.querySelector('.form-steps').style.display='none';
