@@ -491,6 +491,73 @@ footer{
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
 .d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+
+/* ── RECOMMEND FORM ── */
+#recommend { background: var(--deep); border-top: 1px solid var(--border); }
+.form-wrap { max-width: 720px; margin: 0 auto; }
+.form-steps { display: flex; flex-direction: column; gap: 0; }
+.form-step { display: none; flex-direction: column; gap: clamp(20px,3vw,32px); }
+.form-step.active { display: flex; }
+.cat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+@media(max-width:520px){ .cat-grid { grid-template-columns: 1fr 1fr; } }
+.subcat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+@media(max-width:420px){ .subcat-grid { grid-template-columns: 1fr; } }
+.cat-btn {
+  background: none; border: 1px solid var(--border); border-radius: 2px;
+  padding: clamp(18px,3vw,28px) 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer; transition: border-color .2s, background .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.cat-btn:hover, .cat-btn.selected { border-color: var(--grain); background: rgba(196,149,90,.06); }
+.cat-icon { font-size: clamp(20px,4vw,28px); }
+.cat-label { font-family: 'Noto Serif KR', serif; font-size: clamp(11px,2vw,13px); font-weight: 400; color: var(--film); line-height: 1.4; text-align: center; }
+.step-label { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; color: var(--grain); opacity: .7; margin-bottom: 4px; }
+.step-title { font-family: 'Noto Serif KR', serif; font-size: clamp(18px,3vw,26px); font-weight: 300; color: var(--film); }
+.form-back {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 10px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--mist); transition: color .2s;
+  -webkit-tap-highlight-color: transparent; padding: 0; margin-bottom: 8px; align-self: flex-start;
+}
+.form-back:hover { color: var(--grain); }
+.form-field { display: flex; flex-direction: column; gap: 8px; }
+.form-field label { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: var(--grain); opacity: .7; }
+.form-input, .form-textarea {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 2px;
+  padding: 14px 16px; color: var(--film);
+  font-family: 'Josefin Sans', sans-serif; font-size: 13px; font-weight: 300;
+  outline: none; transition: border-color .2s; width: 100%; -webkit-appearance: none;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--mist); }
+.form-input:focus, .form-textarea:focus { border-color: var(--grain); }
+.form-textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+.form-submit {
+  align-self: flex-end; background: none; border: 1px solid var(--grain); border-radius: 2px;
+  padding: 14px 36px; color: var(--grain);
+  font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: .35em; text-transform: uppercase;
+  cursor: pointer; transition: background .2s, color .2s; -webkit-tap-highlight-color: transparent;
+}
+.form-submit:hover { background: var(--grain); color: var(--noir); }
+.form-submit:disabled { opacity: .4; cursor: not-allowed; }
+.form-progress { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.prog-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background .3s; }
+.prog-dot.active { background: var(--grain); }
+.form-success { display: none; flex-direction: column; align-items: center; text-align: center; padding: 60px 0; gap: 16px; }
+.form-success.show { display: flex; }
+.success-icon { font-size: 40px; }
+.success-title { font-family: 'Noto Serif KR', serif; font-size: clamp(18px,3vw,24px); font-weight: 300; color: var(--film); }
+.success-sub { font-size: 12px; color: var(--mist); letter-spacing: .1em; }
+.form-reset {
+  margin-top: 8px; background: none; border: 1px solid var(--border); border-radius: 2px;
+  padding: 10px 24px; color: var(--mist); font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+  cursor: pointer; transition: border-color .2s, color .2s;
+}
+.form-reset:hover { border-color: var(--grain); color: var(--grain); }
+.form-error { font-size: 11px; color: #e06c6c; letter-spacing: .05em; display: none; }
+.form-error.show { display: block; }
 </style>
 </head>
 <body>
@@ -504,6 +571,7 @@ footer{
   <a href="#purpose" onclick="closeMob()">소개</a>
   <a href="#activities" onclick="closeMob()">활동</a>
   <a href="#archive" onclick="closeMob()">아카이브</a>
+  <a href="#recommend" onclick="closeMob()">추천·건의</a>
   <a href="mailto:kwyouminsang@gmail.com" onclick="closeMob()">연락처</a>
   <p class="mob-menu-contact">
     <a href="mailto:kwyouminsang@gmail.com">kwyouminsang@gmail.com</a><br>
@@ -518,6 +586,7 @@ footer{
     <li><a href="#purpose">소개</a></li>
     <li><a href="#activities">활동</a></li>
     <li><a href="#archive">아카이브</a></li>
+    <li><a href="#recommend">추천·건의</a></li>
     <li><a href="mailto:kwyouminsang@gmail.com">연락처</a></li>
   </ul>
   <button class="hamburger" id="ham" onclick="toggleMob()" aria-label="메뉴">
@@ -682,6 +751,85 @@ footer{
   </div>
 </section>
 
+
+<!-- RECOMMEND -->
+<section id="recommend">
+  <div class="inner">
+    <div class="s-head reveal">
+      <span class="s-num">04 ——</span>
+      <h2 class="s-title"><small>Recommend</small>추천 · 건의</h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="form-wrap">
+      <div class="form-progress" id="formProgress">
+        <div class="prog-dot active" id="dot0"></div>
+        <div class="prog-dot" id="dot1"></div>
+        <div class="prog-dot" id="dot2"></div>
+      </div>
+      <div class="form-steps">
+        <!-- STEP 0 -->
+        <div class="form-step active" id="step0">
+          <div>
+            <div class="step-label">Step 1</div>
+            <div class="step-title">어떤 종류의 추천인가요?</div>
+          </div>
+          <div class="cat-grid">
+            <button class="cat-btn" onclick="selectCat1('영화 추천')">
+              <span class="cat-icon">🎬</span>
+              <span class="cat-label">영화 추천</span>
+            </button>
+            <button class="cat-btn" onclick="selectCat1('활동 건의')">
+              <span class="cat-icon">💡</span>
+              <span class="cat-label">활동 건의</span>
+            </button>
+            <button class="cat-btn" onclick="selectCat1('기타')">
+              <span class="cat-icon">✉️</span>
+              <span class="cat-label">기타</span>
+            </button>
+          </div>
+        </div>
+        <!-- STEP 1 -->
+        <div class="form-step" id="step1">
+          <div>
+            <button class="form-back" onclick="goBack(0)">← 이전</button>
+            <div class="step-label">Step 2</div>
+            <div class="step-title" id="step1Title">세부 카테고리를 선택해주세요</div>
+          </div>
+          <div class="subcat-grid" id="subcatGrid"></div>
+        </div>
+        <!-- STEP 2 -->
+        <div class="form-step" id="step2">
+          <div>
+            <button class="form-back" id="backBtn2" onclick="goBack(1)">← 이전</button>
+            <div class="step-label">Step 3</div>
+            <div class="step-title">내용을 입력해주세요</div>
+          </div>
+          <div class="form-field">
+            <label>제목 *</label>
+            <input class="form-input" id="formTitle" type="text" placeholder="추천할 영화 제목 또는 건의 제목">
+          </div>
+          <div class="form-field">
+            <label>내용 *</label>
+            <textarea class="form-textarea" id="formContent" placeholder="추천 이유나 건의 내용을 자유롭게 적어주세요."></textarea>
+          </div>
+          <div class="form-field">
+            <label>이름 (선택)</label>
+            <input class="form-input" id="formName" type="text" placeholder="익명으로 제출할 수도 있어요">
+          </div>
+          <div class="form-error" id="formError">제목과 내용을 입력해주세요.</div>
+          <button class="form-submit" id="formSubmit" onclick="submitForm()">제출하기</button>
+        </div>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">🎞</div>
+        <div class="success-title">제출이 완료됐어요!</div>
+        <div class="success-sub">소모임 운영진이 검토 후 반영할게요.</div>
+        <button class="form-reset" onclick="resetForm()">다시 제출하기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -697,6 +845,7 @@ footer{
           <a href="#purpose">소모임 소개</a>
           <a href="#activities">활동 계획</a>
           <a href="#archive">활동 기록</a>
+          <a href="#recommend">추천·건의</a>
           <a href="mailto:kwyouminsang@gmail.com">연락처</a>
         </div>
       </div>
@@ -857,6 +1006,92 @@ const obs = new IntersectionObserver(entries => {
   });
 }, {threshold: 0.07, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── RECOMMEND FORM ── */
+const subCats = {
+  '영화 추천': [
+    {icon:'🎟', label:'정기모임 영화 추천'},
+    {icon:'💀', label:'최악의 영화제 추천'},
+    {icon:'🏛', label:'아트시네마 추천'},
+    {icon:'✨', label:'기타'},
+  ],
+  '활동 건의': [
+    {icon:'🔧', label:'기존 활동 개선 건의'},
+    {icon:'🌱', label:'새로운 활동 추가 건의'},
+    {icon:'✨', label:'기타'},
+  ],
+};
+let cat1='', cat2='';
+
+function setDot(step){
+  [0,1,2].forEach(i=>{ document.getElementById('dot'+i).classList.toggle('active',i<=step); });
+}
+function showStep(n){
+  document.querySelectorAll('.form-step').forEach(el=>el.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  setDot(n);
+}
+function selectCat1(val){
+  cat1=val; cat2='';
+  if(val==='기타'){ showStep(2); document.getElementById('backBtn2').onclick=()=>goBack(0); return; }
+  const grid=document.getElementById('subcatGrid');
+  grid.innerHTML='';
+  subCats[val].forEach(sc=>{
+    const btn=document.createElement('button');
+    btn.className='cat-btn';
+    btn.innerHTML=`<span class="cat-icon">${sc.icon}</span><span class="cat-label">${sc.label}</span>`;
+    btn.onclick=()=>selectCat2(sc.label);
+    grid.appendChild(btn);
+  });
+  document.getElementById('step1Title').textContent=val==='영화 추천'?'어떤 영화 추천인가요?':'어떤 활동 건의인가요?';
+  showStep(1);
+}
+function selectCat2(val){
+  cat2=val;
+  document.getElementById('backBtn2').onclick=()=>goBack(1);
+  showStep(2);
+}
+function goBack(to){ showStep(to); }
+
+async function submitForm(){
+  const title=document.getElementById('formTitle').value.trim();
+  const content=document.getElementById('formContent').value.trim();
+  const name=document.getElementById('formName').value.trim();
+  const errEl=document.getElementById('formError');
+  if(!title||!content){ errEl.classList.add('show'); return; }
+  errEl.classList.remove('show');
+  const btn=document.getElementById('formSubmit');
+  btn.disabled=true; btn.textContent='제출 중...';
+  const category2=cat2||(cat1==='기타'?'':'');
+  const formData=new FormData();
+  formData.append('entry.623424813', cat1);
+  formData.append('entry.1162700598', category2);
+  formData.append('entry.1695535251', title);
+  formData.append('entry.1500750892', content);
+  formData.append('entry.333556342', name||'익명');
+  try{
+    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfY4J1ONDUiaE_-ajeKDucHT-XrFhbB_2w-vLog-IFzyFV_qw/formResponse', {method:'POST',mode:'no-cors',body:formData});
+    document.getElementById('formSuccess').classList.add('show');
+    document.querySelector('.form-steps').style.display='none';
+    document.getElementById('formProgress').style.display='none';
+  } catch(e){
+    btn.disabled=false; btn.textContent='제출하기';
+    errEl.textContent='제출 중 오류가 발생했어요. 다시 시도해주세요.';
+    errEl.classList.add('show');
+  }
+}
+function resetForm(){
+  cat1=''; cat2='';
+  document.getElementById('formTitle').value='';
+  document.getElementById('formContent').value='';
+  document.getElementById('formName').value='';
+  document.getElementById('formError').classList.remove('show');
+  document.getElementById('formSuccess').classList.remove('show');
+  document.querySelector('.form-steps').style.display='';
+  document.getElementById('formProgress').style.display='';
+  showStep(0);
+}
+
 </script>
 </body>
 </html>
