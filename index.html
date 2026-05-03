@@ -7,8 +7,8 @@
 <meta name="theme-color" content="#080810">
 <title>누벨바그, Nouvelle Vague</title>
 <meta name="description" content="광운대학교 미디어커뮤니케이션학부 영화 소모임(假). 새로운 시선이 새로운 영화를 만든다.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23080810'/%3E%3Crect x='3' y='3' width='26' height='26' rx='1' fill='none' stroke='%23c4955a' stroke-width='1.5'/%3E%3Crect x='7' y='7' width='18' height='18' rx='1' fill='none' stroke='%23c4955a' stroke-width='1'/%3E%3Cpath d='M8 16 C10.5 11,13 11,16 16 C19 21,21.5 21,24 16' stroke='%23c4955a' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23080810'/%3E%3Crect x='16' y='16' width='148' height='148' rx='4' fill='none' stroke='%23c4955a' stroke-width='8'/%3E%3Crect x='36' y='36' width='108' height='108' rx='2' fill='none' stroke='%23c4955a' stroke-width='5'/%3E%3Cpath d='M42 90 C57 58,72 58,90 90 C108 122,123 122,138 90' stroke='%23c4955a' stroke-width='8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Serif+KR:wght@300;400;500&family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
@@ -80,9 +80,9 @@ nav.scrolled{
   border-color:var(--border);
 }
 .nav-logo{
-  font-family:'Black Han Sans',sans-serif;font-size:15px;
-  color:var(--grain);text-decoration:none;letter-spacing:.08em;
-  flex-shrink:0;-webkit-tap-highlight-color:transparent;
+  text-decoration:none;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+  display:flex;align-items:center;
 }
 .nav-links{display:flex;gap:28px;list-style:none;}
 .nav-links a{
@@ -986,7 +986,7 @@ footer{
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">누벨바그</a>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="누벨바그" style="height:32px;width:auto;object-fit:contain;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#purpose">소개</a></li>
     <li><a href="#activities">활동</a></li>
@@ -1015,9 +1015,7 @@ footer{
   <div class="hero-content">
     <div class="hero-eye">광운대학교 미디어커뮤니케이션학부 영화 소모임(假) '누벨바그' 홈페이지(임시)</div>
     <div class="hero-mark">
-      <svg width="34" height="13" viewBox="0 0 34 13" fill="none">
-        <path d="M1 6.5C4 1.5,7.5 1.5,11 6.5C14.5 11.5,19 11.5,23 6.5C26.5 1.5,30 1.5,33 6.5" stroke="#C4955A" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
+      <img src="logo.png" alt="누벨바그 로고" style="width:100%;height:100%;object-fit:contain;border-radius:4px;">
     </div>
     <h1 class="hero-kr">누벨바그</h1>
     <div class="hero-en">Nouvelle Vague</div>
