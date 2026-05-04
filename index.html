@@ -5,10 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#080810">
+<meta property="og:title" content="누벨바그, Nouvelle Vague">
+<meta property="og:description" content="새로운 시선이 새로운 영화를 만든다. 광운대학교 미디어커뮤니케이션학부 영화 소모임.">
+<meta property="og:image" content="https://kwyouminsang.github.io/nouvellevague/logo.png">
+<meta property="og:url" content="https://kwyouminsang.github.io/nouvellevague/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>누벨바그, Nouvelle Vague</title>
 <meta name="description" content="광운대학교 미디어커뮤니케이션학부 영화 소모임(假). 새로운 시선이 새로운 영화를 만든다.">
-<link rel="icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
+<link rel="icon" type="image/png" href="logo.png?v=2">
+<link rel="apple-touch-icon" href="logo.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Serif+KR:wght@300;400;500&family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
@@ -192,7 +198,6 @@ nav.scrolled{
   margin-bottom:clamp(20px,4vw,32px);position:relative;
   opacity:0;animation:fadeUp 1s .5s forwards;
 }
-.hero-mark::before{content:'';position:absolute;inset:9px;border:1px solid rgba(196,149,90,.18);border-radius:1px;}
 .hero-kr{
   font-family:'Black Han Sans',sans-serif;
   font-size:clamp(54px,17vw,136px);
@@ -473,8 +478,6 @@ footer{
 }
 @media(max-width:700px){.footer-top{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:1/-1;}}
 @media(max-width:420px){.footer-top{grid-template-columns:1fr;}}
-.f-logo{font-family:'Black Han Sans',sans-serif;font-size:clamp(20px,4vw,28px);color:var(--grain);margin-bottom:5px;}
-.f-logo-en{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--mist);margin-bottom:14px;}
 .f-desc{font-size:clamp(11px,1.8vw,12px);font-weight:300;color:var(--mist);line-height:1.9;}
 .f-section-title{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--grain);opacity:.55;margin-bottom:18px;}
 .f-links{display:flex;flex-direction:column;gap:11px;}
@@ -1336,8 +1339,7 @@ onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfF-RZ3zyn3DnfI
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="f-logo">누벨바그</div>
-        <div class="f-logo-en">Nouvelle Vague</div>
+        <img src="logo.png?v=2" alt="누벨바그" style="height:64px;width:auto;object-fit:contain;display:block;margin-bottom:14px;border-radius:4px;">
         <div class="f-desc">새로운 시선이 새로운 영화를 만든다.<br>광운대학교 미디어커뮤니케이션학부 영화 소모임(假).</div>
       </div>
       <div>
